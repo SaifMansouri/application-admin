@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "640893556568",
+    "project_id": "applicationhiit",
+    "storage_bucket": "applicationhiit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640893556568:android:2dfe9f72d5b7a4fc46b72d",
+        "android_client_info": {
+          "package_name": "com.example.applicationahiit_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640893556568-jt86ustmplki2vakcmhr0tqcgocdmf5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSkfMhW4PRh31fRCVDOehXpS-T1oXqNxw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640893556568-jt86ustmplki2vakcmhr0tqcgocdmf5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
