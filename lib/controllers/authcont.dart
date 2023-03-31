@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthController with ChangeNotifier{
-Future<void> login(String email ,String password)async{
+/*Future<void> login(String email ,String password)async{
     try {
   final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: email,
@@ -15,5 +15,5 @@ Future<void> login(String email ,String password)async{
     print('Mauvais mot de passe fourni pour cet utilisateur.');
   }
 }
-}
+}*/
 }

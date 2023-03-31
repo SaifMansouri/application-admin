@@ -47,8 +47,23 @@ class AdminScreen extends StatelessWidget {
                   InputText(hint: "Mot de passe",obs: Provider.of<SigninController>(context).obs,icon:Provider.of<SigninController>(context).icon,click: () => Provider.of<SigninController>(context,listen: false).visibilite(),),    
                   const SizedBox(height: 15,),
                   MyBottoun(text: 'connecter',click: () async{ 
-                    
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const AddScreen()));
+                    try {
+  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: "yassine@gmail.com",
+    password: "12345678",
+  );
+                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const AddScreen()));
+                       print('logged in');
+
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'weak-password') {
+    print('The password provided is too weak.');
+  } else if (e.code == 'email-already-in-use') {
+    print('The account already exists for that email.');
+  }
+} catch (e) {
+  print(e);
+}
 
                   },),
           ],),
