@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 
 
+import '../../controllers/authcont.dart';
 import '../../controllers/signcontroller.dart';
 import '../../values/colors.dart';
 import '../Widgets/botoun.dart';
@@ -14,59 +15,56 @@ import '../Widgets/input.dart';
 
 
 class AdminScreen extends StatelessWidget {
-  const AdminScreen({super.key});
+   AdminScreen({super.key});
+  final _formKey = GlobalKey<FormState>();
+  final myController1 = TextEditingController();
+  final myController2 = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+                backgroundColor: Colors.white,
+
         body: Center(child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-            Image.asset('assets/logo1.png',height: 60,),
-                  const SizedBox(height: 20,),
-                  const Text(style: TextStyle(
-                    color:ConstColors.maincolor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily:'Roboto',
-                  ),"Bienvenue Admin"),
-                  const SizedBox(height: 8,),
-            
-                const Text(style: TextStyle(
-                    color: ConstColors.maincolor,
-                    fontFamily:'Roboto',
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,         
-                  ),"S'identifier"),
-                  const SizedBox(height: 15,),
-                  const InputText(hint: "Adresse E-mail",type: TextInputType.emailAddress,),
-                  const SizedBox(height: 15,),
-                  InputText(hint: "Mot de passe",obs: Provider.of<SigninController>(context).obs,icon:Provider.of<SigninController>(context).icon,click: () => Provider.of<SigninController>(context,listen: false).visibilite(),),    
-                  const SizedBox(height: 15,),
-                  MyBottoun(text: 'connecter',click: () async{ 
-                    try {
-  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: "yassine@gmail.com",
-    password: "12345678",
-  );
-                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const AddScreen()));
-                       print('logged in');
+          child: Form(
+            key: _formKey,
+            child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Image.asset('assets/logo1.png',height: 60,),
+                    const SizedBox(height: 20,),
+                    const Text(style: TextStyle(
+                      color:ConstColors.maincolor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily:'Roboto',
+                    ),"Bienvenue Admin"),
+                    const SizedBox(height: 8,),
+              
+                   const Text(style: TextStyle(
+                      color: ConstColors.maincolor,
+                      fontFamily:'Roboto',
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,         
+                    ),"S'identifier"),
+                    const SizedBox(height: 15,),
+                     InputText(hint: "Adresse E-mail",type: TextInputType.emailAddress,validator: (val)=>Provider.of<AuthController>(context,listen: false).validEmail(val??""),controler: myController1,),
+                    const SizedBox(height: 15,),
+                    InputText(hint: "Mot de passe",obs: Provider.of<SigninController>(context).obs,icon:Provider.of<SigninController>(context).icon,click: () => Provider.of<SigninController>(context,listen: false).visibilite(),validator: (val)=>Provider.of<AuthController>(context,listen: false).validPassword(val??""),controler: myController2,),    
+                    const SizedBox(height: 15,),
+                    MyBottoun(text: 'connecter',click: () async{ 
+                      if(!_formKey.currentState!.validate()){
+                        return;
+                      }                      _formKey.currentState!.save();
 
-} on FirebaseAuthException catch (e) {
-  if (e.code == 'weak-password') {
-    print('The password provided is too weak.');
-  } else if (e.code == 'email-already-in-use') {
-    print('The account already exists for that email.');
-  }
-} catch (e) {
-  print(e);
-}
-
-                  },),
-          ],),
+                    await Provider.of<AuthController>(context,listen: false).login(myController1.text, myController2.text, context);
+                    },),
+            ],),
+          ),
         )
         ),
       ),

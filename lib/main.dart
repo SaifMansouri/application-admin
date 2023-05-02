@@ -1,4 +1,5 @@
 import 'package:applicationahiit_admin/controllers/addcontroller.dart';
+import 'package:applicationahiit_admin/controllers/authcont.dart';
 import 'package:applicationahiit_admin/views/screens/splashscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,6 +18,8 @@ await Firebase.initializeApp(
   runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => SigninController()),
       ChangeNotifierProvider(create: (context) => AddController()),
+            ChangeNotifierProvider(create: (context) => AuthController()),
+
 
     ],
     child: const MyApp()));

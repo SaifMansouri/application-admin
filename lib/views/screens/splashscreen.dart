@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:applicationahiit_admin/views/screens/add_screen.dart';
 import 'package:applicationahiit_admin/views/screens/login_admin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../values/colors.dart';
@@ -17,7 +19,16 @@ class _SplashScreenState extends State<SplashScreen>{
  void initState(){
     super.initState();
     Timer(const Duration(seconds: 3),(){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(_) => const AdminScreen()));
+FirebaseAuth.instance
+  .userChanges()
+  .listen((User? user) {
+    if (user == null) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(_) =>  AdminScreen()));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder:(_) =>  AddScreen()));
+    }
+  });
+
   });
   }
   @override
